@@ -127,7 +127,7 @@ if "%offlineMessage%"=="TALKDATACMD-no" goto sendOfflineMessage
 type "%appdata%\USB Talk\storedMsgs.txt"
 echo. 
 echo. 
-echo %name%, at %time%, %date% [offline]:
+echo %name%, at %time%, %date% [offline, unsent]:
 echo "%offlineMessage%"
 )>"%appdata%\USB Talk\storedMsgs2.txt"
 del "%appdata%\USB Talk\storedMsgs.txt"
@@ -151,7 +151,7 @@ echo "%offlineMessage%"
 del "%appdata%\USB Talk\outbox.txt"
 ren "%appdata%\USB Talk\outbox2.txt" "outbox.txt"
 cls
-echo Sent!
+echo Sent! Will be sent when USB is connected. 
 pause
 goto update
 
