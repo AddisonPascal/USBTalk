@@ -42,7 +42,6 @@ if not exist "%appdata%\USB Talk\outbox.txt" goto afterOfflineSent
 (
 @echo off
 type "%drive%:\talkdata\msgs.txt"
-echo. 
 type "%appdata%\USB Talk\outbox.txt"
 )>"%drive%:\talkdata\msgs2.txt"
 del "%drive%:\talkdata\msgs.txt"
