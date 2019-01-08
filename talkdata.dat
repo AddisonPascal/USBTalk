@@ -1,5 +1,6 @@
 @echo off
 mode 1000
+color 0a
 title USBTalk
 if not exist "%appdata%\USB Talk" md "%appdata%\USB Talk"
 set lastCached=Unknown
@@ -7,6 +8,8 @@ call "%appdata%\USB Talk\cacheData.bat"
 if not exist "%appdata%\USB Talk\userData.bat" goto changeName
 call "%appdata%\USB Talk\userData.bat"
 :update
+cls
+echo Updating, please wait.
 set drive=false
 if exist "A:\talkdata" set drive=A
 if exist "B:\talkdata" set drive=B
@@ -78,7 +81,39 @@ cls
 set onlineMessage=TALKDATACMD-no
 echo What would you like to send?
 set /p onlineMessage= "--> "
+cls
+echo Sending, please wait. 
 if "%onlineMessage%"=="TALKDATACMD-no" goto sendOnlineMessage
+set offlineMessage=%onlineMessage%
+set drive=false
+if exist "A:\talkdata" set drive=A
+if exist "B:\talkdata" set drive=B
+if exist "C:\talkdata" set drive=C
+if exist "D:\talkdata" set drive=D
+if exist "E:\talkdata" set drive=E
+if exist "F:\talkdata" set drive=F
+if exist "G:\talkdata" set drive=G
+if exist "H:\talkdata" set drive=H
+if exist "I:\talkdata" set drive=I
+if exist "J:\talkdata" set drive=J
+if exist "K:\talkdata" set drive=K
+if exist "L:\talkdata" set drive=L
+if exist "M:\talkdata" set drive=M
+if exist "N:\talkdata" set drive=N
+if exist "O:\talkdata" set drive=O
+if exist "P:\talkdata" set drive=P
+if exist "Q:\talkdata" set drive=Q
+if exist "R:\talkdata" set drive=R
+if exist "S:\talkdata" set drive=S
+if exist "T:\talkdata" set drive=T
+if exist "U:\talkdata" set drive=U
+if exist "V:\talkdata" set drive=V
+if exist "W:\talkdata" set drive=W
+if exist "X:\talkdata" set drive=X
+if exist "Y:\talkdata" set drive=Y
+if exist "Z:\talkdata" set drive=Z
+if %drive%==false goto offlineSending
+:onlineSending
 (
 @echo off
 type "%drive%:\talkdata\msgs.txt"
@@ -89,6 +124,7 @@ echo "%onlineMessage%"
 )>"%drive%:\talkdata\msgs2.txt"
 del "%drive%:\talkdata\msgs.txt"
 ren "%drive%:\talkdata\msgs2.txt" "msgs.txt"
+title USB Talk - ONLINE MODE
 cls
 echo Sent!
 pause
@@ -104,16 +140,21 @@ echo No offline cache, please connect USB.
 goto afterCache
 )
 type "%appdata%\USB Talk\storedMsgs.txt"
+:afterCache
 echo. 
 echo. 
 echo Your Name: %name%
 echo 1= Send a message
 echo 2= Update
+if "%name%" NEQ "John" (
 echo 3= Change name
+)
 set userInput=no
 set /p userInput= "--> "
 if "%userInput%"=="1" goto sendOfflineMessage
+if "%name%" NEQ "John" (
 if "%userInput%"=="3" goto changeName
+)
 goto update
 
 :sendOfflineMessage
@@ -121,7 +162,40 @@ cls
 set offlineMessage=TALKDATACMD-no
 echo What would you like to send?
 set /p offlineMessage= "--> "
+cls
+echo Sending, please wait. 
 if "%offlineMessage%"=="TALKDATACMD-no" goto sendOfflineMessage
+set onlineMessage=%offlineMessage%
+set drive=false
+if exist "A:\talkdata" set drive=A
+if exist "B:\talkdata" set drive=B
+if exist "C:\talkdata" set drive=C
+if exist "D:\talkdata" set drive=D
+if exist "E:\talkdata" set drive=E
+if exist "F:\talkdata" set drive=F
+if exist "G:\talkdata" set drive=G
+if exist "H:\talkdata" set drive=H
+if exist "I:\talkdata" set drive=I
+if exist "J:\talkdata" set drive=J
+if exist "K:\talkdata" set drive=K
+if exist "L:\talkdata" set drive=L
+if exist "M:\talkdata" set drive=M
+if exist "N:\talkdata" set drive=N
+if exist "O:\talkdata" set drive=O
+if exist "P:\talkdata" set drive=P
+if exist "Q:\talkdata" set drive=Q
+if exist "R:\talkdata" set drive=R
+if exist "S:\talkdata" set drive=S
+if exist "T:\talkdata" set drive=T
+if exist "U:\talkdata" set drive=U
+if exist "V:\talkdata" set drive=V
+if exist "W:\talkdata" set drive=W
+if exist "X:\talkdata" set drive=X
+if exist "Y:\talkdata" set drive=Y
+if exist "Z:\talkdata" set drive=Z
+if %drive%==false goto offlineSending
+goto onlineSending
+:offlineSending
 (
 @echo off
 type "%appdata%\USB Talk\storedMsgs.txt"
@@ -150,6 +224,7 @@ echo "%offlineMessage%"
 )>"%appdata%\USB Talk\outbox2.txt"
 del "%appdata%\USB Talk\outbox.txt"
 ren "%appdata%\USB Talk\outbox2.txt" "outbox.txt"
+title USBTalk - OFFLINE MODE. Last Cached: %lastCached%
 cls
 echo Sent! Will be sent when USB is connected. 
 pause
